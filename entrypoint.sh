@@ -13,10 +13,6 @@ if [ -z ${hosts_csv+x} ]; then echo "hosts_csv is unset" exit 1; else echo "host
 OLDIFS=$IFS # Save the current value of the IFS (Internal Field Separator)
 IFS=',' # Set the IFS to a comma (,) to split the string by commas
 
-# Add Iptables to the image
-echo "Installing IPTables"
-apk add --update iptables ip6tables ipset bind-tools
-
 # make sure the set exists
 ipset -exist create $set hash:ip
 

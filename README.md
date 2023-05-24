@@ -62,19 +62,20 @@ spec:
 
       # InitContainers initialise IP Tables to redirect traffic to Envoy
       initContainers:
-        image: nebev/k8s-dynamic-iptables:latest # init container
-        name: iptables-init
-        env:
-        - name: hosts_csv
-          value: "svc.cluster.local,cluster.local,dl-cdn.alpinelinux.org,deb.debian.org,googleapis.com,storage.googleapis.com"
-        - name: listening_ports_csv
-          value: "3000"
-        - name: extra_whitelist_ips_csv
-          value "192.168.0.0/24"
-        securityContext:
-          capabilities:
-            add:
-            - NET_ADMIN # Otherwise we can't update iptables
+        - image: nebev/k8s-dynamic-iptables:latest # init container
+          name: iptables-init
+          env:
+          - name: hosts_csv
+            value: "svc.cluster.local,cluster.local,dl-cdn.alpinelinux.org,deb.debian.org,googleapis.com,storage.googleapis.com"
+          - name: listening_ports_csv
+            value: "3000"
+          - name: extra_whitelist_ips_csv
+            value: "192.168.0.0/24"
+          securityContext:
+            capabilities:
+              add:
+              - NET_ADMIN # Otherwise we can't update iptables
+
 ```
 
 If we shell into the container, and run some commands:
